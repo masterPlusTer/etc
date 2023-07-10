@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grilla cuadriculada para el matrix led del esp32 y el arduino etc</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+
+		td {
+			width: 25px;
+			height: 25px;
+			border: 1px solid black;
+			text-align: center;
+			font-size: 20px;
+		}
+
+		td.selected {
+			background-color: black;
+			color: white;
+		}
+
+		tr.col-numbers td {
+			text-align: center;
+			font-size: 16px;
+			color: gray;
+			padding: 0 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Grilla cuadriculada</h1>
+	<label for="alto">Alto:</label>
+	<input type="number" id="alto" min="1" value="8">
+	<label for="ancho">Ancho:</label>
+	<input type="number" id="ancho" min="1" value="8">
+	<button onclick="crearGrilla()">Crear grilla</button>
+	<table id="grilla">
+	</table>
+	<p>Haz clic en las celdas para cambiar entre 0 y 1.</p>
+	<button onclick="leerGrilla()">Leer grilla</button>
+	<div id="resultado"></div>
+	<script>
+		var grilla = document.getElementById("grilla");
+		var cells = []; // Declarar cells en el ámbito global
+
+		function crearGrilla() {
+			// Obtener el alto y el ancho de la grilla
+			var alto = document.getElementById("alto").value;
+			var ancho = document.getElementById("ancho").value;
+
+			// Crear una tabla vacía con las dimensiones especificadas
+			var tabla = "";
+			for (var i = 0; i < alto; i++) {
+				tabla += "<tr>";
+				for (var j = 0; j < ancho; j++) {
+					tabla += "<td class='cell'>0</td>";
+				}
+				tabla += "</tr>";
+			}
+			grilla.innerHTML = tabla;
+
+			// Obtener todas las celdas de la tabla y asignarlas a la variable cells
+			cells = document.querySelectorAll(".cell");
+
+			// Establecer todos los cuadraditos en "0" por defecto
+			for (var i = 0; i < cells.length; i++) {
+				cells[i].innerHTML = "0";
+			}
+
+			// Agregar un evento de clic a cada celda
+			for (var i = 0; i < cells.length; i++) {
+				cells[i].addEventListener("click", function() {
+					// Cambiar el valor de la celda entre 0 y 1
+					if (this.innerHTML === "0") {
+						this.innerHTML = "1";
+						this.classList.add("selected");
+					} else {
+						this.innerHTML = "0";
+						this.classList.remove("selected");
+					}
+				});
+			}
+		}
+
+		function leerGrilla() {
+			// Crear un arreglo para almacenar los valores de cada columna
+			var columnas = [];
+
+			// Recorrer todas las columnas de la grilla
+			for (var i = 0; i < grilla.rows[0].cells.length; i++) {
+				// Construir el valor hexadecimal de la columna a medida que avanzamos
+				var valorHex = "";
+				for (var j = 0; j < grilla.rows.length; j++) {
+					var valorBin = grilla.rows[j].cells[i].innerHTML;
+					valorHex += valorBin;
+				}
+				// Convertir el valor binario a hexadecimal y agregar el prefijo "0x"
+				var hex = parseInt(valorHex, 2).toString(16);
+				columnas.push("0x"+ hex); // Agregar la columna al arreglo de columnas
+			}
+
+			// Mostrar el resultado en la página
+			var resultado = document.getElementById("resultado");
+			resultado.innerHTML = "Valores hexadecimales de la grilla: " + columnas.join(", ");
+		}
+	</script>
+</body>
+</html>
