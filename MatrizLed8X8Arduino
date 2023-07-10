@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grilla cuadriculada de 8X8 para el led matrix del esp32</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+
+		td {
+			width: 25px;
+			height: 25px;
+			border: 1px solid black;
+			text-align: center;
+			font-size: 20px;
+		}
+
+		td.selected {
+			background-color: black;
+			color: white;
+		}
+
+		tr.col-numbers td {
+			text-align: center;
+			font-size: 16px;
+			color: gray;
+			padding: 0 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Grilla cuadriculada</h1>
+	<table>
+		<tbody>
+			<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>
+            <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>	<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>	<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>	<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>	<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>	<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>	<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+
+			</tr>
+			
+		</tbody>
+	</table>
+	<p>Haz clic en las celdas para cambiar entre 0 y 1.</p>
+	<button onclick="leerGrilla()">Leer grilla</button>
+	<div id="resultado"></div>
+	<script>
+		// Obtener todas las celdas de la tabla
+		var cells = document.querySelectorAll(".cell");
+
+		// Establecer todos los cuadraditos en "0" por defecto
+		for (var i = 0; i < cells.length; i++) {
+			cells[i].innerHTML = "0";
+		}
+
+		// Agregar un evento de clic a cada celda
+		for (var i = 0; i < cells.length; i++) {
+			cells[i].addEventListener("click", function() {
+				// Cambiar el valor de la celda entre 0 y 1
+				if (this.innerHTML === "0") {
+					this.innerHTML = "1";
+					this.classList.add("selected");
+				} else {
+					this.innerHTML = "0";
+					this.classList.remove("selected");
+				}
+			});
+		}
+
+		function leerGrilla() {
+			// Crear un arreglo para almacenar los valores de cada columna
+			var columnas = [];
+
+			// Recorrer todas las columnas de la tabla
+			for (var i = 0; i < 8; i++) {
+				// Crear una cadena vacía para almacenar los valores de la columna
+				var valores = "";
+
+				// Recorrer todas las celdas de la columna
+				for (var j = i; j < cells.length; j += 8) {
+					// Obtener el valor de la celda
+					var valor = cells[j].innerHTML;
+
+					// Agregar el valor a la cadena
+					valores += valor;
+				}
+
+				// Convertir la cadena de dígitos binarios en un número hexadecimal
+                var hex = parseInt(valores, 2).toString(16).toUpperCase().padStart(2, "0");
+				// Agregar el valor hexadecimal a la columna
+				columnas.push("0x" + hex);;
+			}
+
+			// Unir las columnas del arreglo separadas por comas
+			var resultado = columnas.join(",");
+
+			// Mostrar el resultado debajo de la grilla
+			document.getElementById("resultado").innerText = resultado;
+		}
+	</script>
+</body>
+</html>
