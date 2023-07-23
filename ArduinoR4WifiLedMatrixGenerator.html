@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grilla cuadriculada de 8X12 para el led matrix integrado del arduino R$ wifi</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+		}
+
+		td {
+			width: 25px;
+			height: 25px;
+			border: 1px solid black;
+			text-align: center;
+			font-size: 20px;
+		}
+
+		td.selected {
+			background-color: black;
+			color: white;
+		}
+
+		tr.col-numbers td {
+			text-align: center;
+			font-size: 16px;
+			color: gray;
+			padding: 0 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1> Arduino R4 wifi (led matrix generator)</h1>
+	<table>
+		<tbody>
+			<tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>
+            <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>    <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>    <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>    <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>    <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>    <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>    <tr>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+                <td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+				<td class="cell">0</td>
+			</tr>
+			<!-- Las demás filas se repiten de manera similar -->
+			<!-- ... -->
+
+			<div>No se me daba la gana tener que estar lidiando con los codigos hexadecimales asi que diseñé esta grilla para que sea más ameno esto de hacer los dibujillos... mas abajo pego un ejemplo del codigo.<br>
+                <br>
+			</div>
+		</tbody>
+	</table>
+	<h3>Haz clic en las celdas para cambiar entre 0 y 1, luego pica el boton de abajo.</h3>
+	<button onclick="leerGrilla()">LEER GRILLA</button>
+	<div id="resultado"></div>
+
+
+
+
+
+
+
+
+<h3>Ejemplo de codigo:<h3>
+
+<h5>
+
+	#include "Arduino_LED_Matrix.h" <br>
+	ArduinoLEDMatrix matrix;<br>
+	
+	void setup() {<br>
+	  matrix.begin();<br>
+	}<br>
+	<br>
+	void loop() {<br>
+	  // Matriz 1<br>
+	  uint8_t frame1[8][12] ={<br>
+		 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
+		  { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },<br>
+		   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
+		    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },<br>
+			 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
+			  { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },<br>
+			   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
+			    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };<br>
+	
+	  // Matriz 2<br>
+	  uint8_t frame2[8][12] = { <br>
+		{ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 },<br>
+		 { 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0 },<br>
+		  { 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1 },<br>
+		   { 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 },<br>
+		    { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 },<br>
+			 { 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0 },<br>
+			  { 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1 },<br>
+			   { 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 } };<br>
+	  // Matriz 3<br>
+	  uint8_t frame3[8][12] = {<br>
+		 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+		  { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 }, <br>
+		  { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+		   { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+		    { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+			 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+			  { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+			   { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 } };<br>
+	
+	// Matriz 4<br>
+	uint8_t frame4[8][12] = {<br>
+	   { 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0 },<br>
+		{ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0 }, <br>
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },<br>
+		 { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },<br>
+		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 },<br>
+		   { 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0 },<br>
+			{ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0 }, <br>
+			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 } };<br>
+	// Matriz 5<br>
+	uint8_t frame5[8][12] ={<br>
+		 { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 }, <br>
+		 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+		  { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },<br>
+		   { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
+		    { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },<br>
+			 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 }, <br>
+			 { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 }, <br>
+			 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 } };<br>
+	// Muestra las matrices<br>
+	<br>
+	matrix.renderBitmap(frame1, 8, 12);<br>
+	delay(1000);<br>
+	matrix.renderBitmap(frame2, 8, 12);<br>
+	delay(1000);<br>
+	matrix.renderBitmap(frame3, 8, 12);<br>
+	delay(1000);<br>
+	matrix.renderBitmap(frame4, 8, 12);<br>
+	delay(1000);<br>
+	matrix.renderBitmap(frame5, 8, 12);<br>
+	delay(1000);<br>
+	}<br>
+
+<h5>
+
+
+
+
+	<script>
+		// Obtener todas las celdas de la tabla
+		var cells = document.querySelectorAll(".cell");
+
+		// Establecer todos los cuadraditos en "0" por defecto
+		for (var i = 0; i < cells.length; i++) {
+			cells[i].innerHTML = "0";
+		}
+
+		// Agregar un evento de clic a cada celda
+		for (var i = 0; i < cells.length; i++) {
+			cells[i].addEventListener("click", function() {
+				// Cambiar el valor de la celda entre 0 y 1
+				if (this.innerHTML === "0") {
+					this.innerHTML = "1";
+					this.classList.add("selected");
+				} else {
+					this.innerHTML = "0";
+					this.classList.remove("selected");
+				}
+			});
+		}
+
+		function leerGrilla() {
+    // Crear una matriz para almacenar los valores de la tabla
+    var matriz = [];
+
+    // Recorrer todas las filas de la tabla
+    for (var i = 0; i < 8; i++) {
+        // Crear una fila vacía para almacenar los valores de la fila
+        var fila = [];
+
+        // Recorrer todas las celdas de la fila
+        for (var j = 0; j < 12; j++) {
+            // Obtener el valor de la celda y agregarlo a la fila
+            var valor = cells[i * 12 + j].innerHTML;
+            fila.push(parseInt(valor));
+        }
+
+        // Agregar la fila a la matriz
+        matriz.push(fila);
+    }
+
+    // Mostrar el resultado en la página
+    var resultado = document.getElementById("resultado");
+    resultado.innerHTML = convertirAMatrizFormato(matriz);
+}
+
+function convertirAMatrizFormato(matriz) {
+    // Crear una cadena para almacenar la representación de la matriz en el formato deseado
+    var cadena = "{\n";
+
+    // Recorrer todas las filas de la matriz
+    for (var i = 0; i < matriz.length; i++) {
+        // Agregar la apertura del arreglo para cada fila
+        cadena += "  { ";
+
+        // Recorrer todas las celdas de la fila
+        for (var j = 0; j < matriz[i].length; j++) {
+            // Agregar el valor de la celda a la cadena, seguido de una coma si no es la última celda
+            cadena += matriz[i][j];
+            if (j < matriz[i].length - 1) {
+                cadena += ", ";
+            }
+        }
+
+        // Agregar la llave de cierre para cada fila
+        cadena += " }";
+
+        // Agregar punto y coma si no es la última fila
+        if (i < matriz.length - 1) {
+            cadena += ",<br>";
+        }
+        cadena += "\n";
+    }
+
+    // Agregar la llave de cierre al final del arreglo y devolver la cadena resultante
+    cadena += "};";
+    return cadena;
+}
+		
+	</script>
+</body>
+</html>
