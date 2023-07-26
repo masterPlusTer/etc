@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Grilla cuadriculada de 8X12 para el led matrix integrado del arduino R$ wifi</title>
+	<title>Grilla cuadriculada de 8X12 para el led matrix integrado del arduino R4 wifi</title>
 	<style>
 		table {
 			border-collapse: collapse;
@@ -17,7 +17,7 @@
 		}
 
 		td.selected {
-			background-color: black;
+			background-color: red;
 			color: white;
 		}
 
@@ -26,6 +26,10 @@
 			font-size: 16px;
 			color: gray;
 			padding: 0 5px;
+		}
+
+		.hide{
+		display:none;
 		}
 	</style>
 </head>
@@ -150,7 +154,7 @@
 	<h3>Haz clic en las celdas para cambiar entre 0 y 1, luego pica el boton de abajo.</h3>
 	<button onclick="leerGrilla()">LEER GRILLA</button>
 
-	<button class="btn-copiar-grilla">Copiar</button>
+	<button class="btn-copiar-grilla hide">Copiar</button>
     <span class="mensajeGrilla"></span>
     <pre><code class="grilla">
 	<div id="resultado"></div>
@@ -407,6 +411,8 @@ function copiar(a,b) {
     // Mostrar el resultado en la página
     var resultado = document.getElementById("resultado");
     resultado.innerHTML = convertirAMatrizFormato(matriz);
+	copiarGrilla.classList.remove("hide");
+
 }
 
 function convertirAMatrizFormato(matriz) {
