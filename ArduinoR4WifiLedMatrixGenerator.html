@@ -149,99 +149,219 @@
 	</table>
 	<h3>Haz clic en las celdas para cambiar entre 0 y 1, luego pica el boton de abajo.</h3>
 	<button onclick="leerGrilla()">LEER GRILLA</button>
+
+	<button class="btn-copiar-grilla">Copiar</button>
+    <span class="mensajeGrilla"></span>
+    <pre><code class="grilla">
 	<div id="resultado"></div>
 
+</code></pre>
 
 
 
 
 
-
-
-<h3>Ejemplo de codigo:<h3>
-
+<h3>Ejemplo de codigo: (replica del ejemplo del IDE de arduino titulado "PlayAnimation.ino")<h3>
+	<button class="btn-copiar-code">Copiar código</button>
+    <span class="mensaje"></span>
+    <pre><code class="codigo">
 <h5>
 
 	#include "Arduino_LED_Matrix.h" <br>
 	ArduinoLEDMatrix matrix;<br>
-	
 	void setup() {<br>
-	  matrix.begin();<br>
+	matrix.begin();<br>
 	}<br>
 	<br>
 	void loop() {<br>
-	  // Matriz 1<br>
-	  uint8_t frame1[8][12] ={<br>
-		 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
-		  { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },<br>
-		   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
-		    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },<br>
-			 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
-			  { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },<br>
-			   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },<br>
-			    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };<br>
-	
-	  // Matriz 2<br>
-	  uint8_t frame2[8][12] = { <br>
-		{ 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 },<br>
-		 { 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0 },<br>
-		  { 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1 },<br>
-		   { 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 },<br>
-		    { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 },<br>
-			 { 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0 },<br>
-			  { 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1 },<br>
-			   { 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1 } };<br>
-	  // Matriz 3<br>
-	  uint8_t frame3[8][12] = {<br>
-		 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-		  { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 }, <br>
-		  { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-		   { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-		    { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-			 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-			  { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-			   { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 } };<br>
-	
-	// Matriz 4<br>
-	uint8_t frame4[8][12] = {<br>
-	   { 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0 },<br>
-		{ 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0 }, <br>
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },<br>
-		 { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },<br>
-		  { 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 },<br>
-		   { 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0 },<br>
-			{ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0 }, <br>
-			{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 } };<br>
-	// Matriz 5<br>
-	uint8_t frame5[8][12] ={<br>
-		 { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 }, <br>
-		 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-		  { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },<br>
-		   { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 },<br>
-		    { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 },<br>
-			 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 }, <br>
-			 { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0 }, <br>
-			 { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 } };<br>
-	// Muestra las matrices<br>
 	<br>
-	matrix.renderBitmap(frame1, 8, 12);<br>
-	delay(1000);<br>
-	matrix.renderBitmap(frame2, 8, 12);<br>
-	delay(1000);<br>
-	matrix.renderBitmap(frame3, 8, 12);<br>
-	delay(1000);<br>
-	matrix.renderBitmap(frame4, 8, 12);<br>
-	delay(1000);<br>
-	matrix.renderBitmap(frame5, 8, 12);<br>
-	delay(1000);<br>
+	<br>
+	// Definir el arreglo de frames<br>
+	uint8_t frames[13][8][12] = {<br>
+	// Matriz 1<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 2<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 3<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 4<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},<br>
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 5<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},<br>
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},<br>
+	{ 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 6<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},<br>
+	{ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 7<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 8<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 9<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 10<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},<br>
+	{ 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 11<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 12<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	},<br>
+	// Matriz 13<br>
+	{<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},<br>
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}<br>
+	}<br>
+	<br>
+	<br>
+	};<br>
+	
+	  // Renderizar los frames en un bucle<br>
+	  for (int i = 0; i < 13; i++) {<br>
+		matrix.renderBitmap(frames[i], 8, 12);<br>
+		delay(66);<br>
+	  }<br>
 	}<br>
 
 <h5>
 
-
+</code></pre>
 
 
 	<script>
+const copiarCode = document.querySelector(".btn-copiar-code");
+const copiarGrilla = document.querySelector(".btn-copiar-grilla");
+
+copiarCode.addEventListener('click', function() {
+  copiar(".codigo",".mensaje");
+});
+
+copiarGrilla.addEventListener('click', function() {
+  copiar(".grilla",".mensajeGrilla");
+});
+
+
+function copiar(a,b) {
+  var codigo = document.querySelector(a);
+  var seleccion = window.getSelection();
+  var rango = document.createRange();
+  rango.selectNodeContents(codigo);
+  seleccion.removeAllRanges();
+  seleccion.addRange(rango);
+  document.execCommand("copy");
+  var mensaje = document.querySelector(b);
+  mensaje.innerHTML = "copiado al portapapeles";
+}
+
 		// Obtener todas las celdas de la tabla
 		var cells = document.querySelectorAll(".cell");
 
@@ -291,7 +411,7 @@
 
 function convertirAMatrizFormato(matriz) {
     // Crear una cadena para almacenar la representación de la matriz en el formato deseado
-    var cadena = "{\n";
+    var cadena = "{<br>";
 
     // Recorrer todas las filas de la matriz
     for (var i = 0; i < matriz.length; i++) {
@@ -308,7 +428,7 @@ function convertirAMatrizFormato(matriz) {
         }
 
         // Agregar la llave de cierre para cada fila
-        cadena += " }";
+        cadena += "}";
 
         // Agregar punto y coma si no es la última fila
         if (i < matriz.length - 1) {
@@ -318,7 +438,7 @@ function convertirAMatrizFormato(matriz) {
     }
 
     // Agregar la llave de cierre al final del arreglo y devolver la cadena resultante
-    cadena += "};";
+    cadena += "<br>}";
     return cadena;
 }
 		
