@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Logo/Emoji to Matrix Converter</title>
+
+</head>
+<body>
+
+  <style>body {margin: 2vmin; padding: 0; font-size: 100%; line-height: 1.5}
+    h1, h2, h3, h4 {margin: 1em 0 .5em; line-height: 1.25}
+    h1 {font-size: 2em}
+    h2 {font-size: 1.5em}
+    h3 {font-size: 1.2em}
+    ul, ol {margin: 1em 0; padding-left: 40px}
+    p, figure {margin: 1em 0}
+    a img {border: none}
+    sup, sub {line-height: 0}
+    h5 {margin: 2vmin}
+
+    canvas {
+        border: 0 solid black;
+    margin-bottom: 0;
+    height: 5vmin;
+    padding-left: 10vmin;
+    }
+
+    .matrix-cell {
+      display: inline-block;
+      width: 2vmin;
+      height: 2vmin;
+      border: .1px solid darkgrey;
+      margin: 0;
+      line-height: 0;
+      font: menu;
+    }
+
+    .matrix-row {
+      width: auto;
+      height: 2vmin;
+      margin: 0;
+      line-height: 0;
+    }
+
+    #copyMessage {
+      margin-top: 1em;
+      display: none;
+    }
+    .etc{
+        display: inline-grid;
+
+    }
+    .etcetc{
+      display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    }
+    .image-preview {
+  display: flex;
+  align-items: center;
+  transform-origin: top left;
+}
+
+.image-preview img {
+  max-width: 10vmin;
+  max-height: 10vmin;
+  margin: 1vmin;
+  margin-bottom: .5vmin;
+
+  transition: transform 0.3s ease;
+}
+.image-preview {
+  display: none;
+}
+
+</style>
+
+<h1>Logo / Emoji to Matrix Converter<canvas id="canvas"></canvas></h1><!-- partial:index.partial.html -->  <div class="etcetc">
+  <h5>Sube una imagen sencilla como un logo, un emoji o similar.<br>
+   Modifica la grilla en cualquier momento clickeando sobre los cuadritos y copiala al portapapeles usando el boton.<br>Tambien puedes rotar la grilla lo cual cambiara la configuracion de filas y columnas de la matriz.</h5>
+  <div class="etc">
+    <input type="file" id="imageInput" accept="image/*">
+    <div class="image-preview">
+      <img id="previewImage" src="" alt="Preview">
+    </div>
+    <button onclick="copyToClipboard()">Copy array to Clipboard</button>    <button onclick="rotate()">Rotate</button>
+
+    <br>
+  </div></div>
+  <p id="copyMessage">Array copiado al portapapeles</p>
+  <div id="matrix"> </div>
+<!-- partial -->
+  <script>var matrix = [[1,1,1,1,0,1,1,1,1],[1,1,1,1,0,1,1,1,1],[1,1,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1]]
+
+    // Nuevo código para generar una grilla predeterminada
+    window.onload = function() {
+      displayMatrix();
+    }
+
+
+    function resetPreviewImage() {
+  var previewContainer = document.getElementById("previewImage");
+  previewContainer.style.transform = "none";
+  previewImage.dataset.rotation = 0;
+
+}
+
+
+function convertToMatrix() {
+  resetPreviewImage();
+  var previewContainer = document.querySelector(".image-preview");
+  previewContainer.style.display = "flex";
+
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  var imageInput = document.getElementById("imageInput");
+
+  var img = new Image();
+  img.onload = function() {
+    var targetSize = 50;
+    var previewImage = document.getElementById("previewImage");
+    previewImage.src = img.src;
+    var scale = Math.min(targetSize / img.width, targetSize / img.height);
+
+    canvas.width = Math.floor(img.width * scale);
+    canvas.height = Math.floor(img.height * scale);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    var data = imageData.data;
+
+    matrix = [];
+    for (var y = 0; y < targetSize; y++) {
+      var row = [];
+      for (var x = 0; x < targetSize; x++) {
+        var sampleX = Math.floor(x * canvas.width / targetSize);
+        var sampleY = Math.floor(y * canvas.height / targetSize);
+
+        var offset = (sampleY * canvas.width + sampleX) * 4;
+        var red = data[offset];
+        var green = data[offset + 1];
+        var blue = data[offset + 2];
+        var alpha = data[offset + 3];
+
+        var grayscale = (red + green + blue) / 3;
+        var pixelValue = grayscale > 128 ? 1 : 0;
+
+        row.push(pixelValue);
+      }
+      matrix.push(row);
+    }
+
+    displayMatrix();
+  };
+
+  var file = imageInput.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+    function displayMatrix() {
+      var matrixDiv = document.getElementById("matrix");
+      matrixDiv.innerHTML = "";
+
+      
+
+      for (var j = 0; j < matrix.length; j++) {
+        var row = matrix[j];
+        var rowDiv = document.createElement("div");
+        rowDiv.className = "matrix-row";
+        matrixDiv.appendChild(rowDiv);
+
+        for (var i = 0; i < row.length; i++) {
+          var cellDiv = document.createElement("div");
+          cellDiv.className = "matrix-cell";
+          cellDiv.innerHTML = row[i] === 1 ? "1" : "0";
+          cellDiv.style.backgroundColor = row[i] === 1 ? "red" : "white";
+          cellDiv.addEventListener("click", toggleCell.bind(null, j, i));
+          rowDiv.appendChild(cellDiv);
+        }
+      }
+    }
+
+    function copyToClipboard() {
+      var resultArray = JSON.stringify(matrix).replace(/\[/g, "{").replace(/\]/g, "}");
+      var copyText = document.createElement("textarea");
+      copyText.value = resultArray;
+      document.body.appendChild(copyText);
+      copyText.select();
+      document.execCommand("copy");
+      document.body.removeChild(copyText);
+
+      var copyMessage = document.getElementById("copyMessage");
+      copyMessage.style.display = "block";
+      setTimeout(function() {
+        copyMessage.style.display = "none";
+      }, 4000);
+    }
+
+    function toggleCell(row, col) {
+      matrix[row][col] = matrix[row][col] === 1 ? 0 : 1;
+      displayMatrix();
+    }
+
+
+
+    function rotate() {
+  matrix = matrix[0].map((col, i) => matrix.map(row => row[i])).reverse();
+  displayMatrix();
+
+
+  var currentRotation = parseInt(previewImage.dataset.rotation || "0");
+  var newRotation = (currentRotation - 90) % 360;
+  previewImage.style.transform = `rotate(${newRotation}deg)`;
+  previewImage.dataset.rotation = newRotation;
+  
+
+}
+
+    document.getElementById("imageInput").addEventListener("change", convertToMatrix);
+</script>
+
+</body>
+</html>
