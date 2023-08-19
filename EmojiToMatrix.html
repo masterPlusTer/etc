@@ -77,21 +77,86 @@
 </style>
 
 <h1>Logo / Emoji to Matrix Converter<canvas id="canvas"></canvas></h1><!-- partial:index.partial.html -->  <div class="etcetc">
-  <h5>Sube una imagen sencilla como un logo, un emoji o similar.<br>
-   Modifica la grilla en cualquier momento clickeando sobre los cuadritos y copiala al portapapeles usando el boton.<br>Tambien puedes rotar la grilla lo cual cambiara la configuracion de filas y columnas de la matriz.</h5>
+  <h5>Agrega a la matriz tantas filas y columnas como desees y editala clickeando sobre los cuadritos.<br>Tambien puedes rotar la grilla lo cual cambiara la configuracion de filas y columnas de la matriz. <br>
+     O puedes subir una imagen sencilla como un logo, un emoji o similar y editarlo a tu gusto.<br>
+  Copiala la matriz al portapapeles usando el boton.<br>
+   </h5>
   <div class="etc">
     <input type="file" id="imageInput" accept="image/*">
     <div class="image-preview">
       <img id="previewImage" src="" alt="Preview">
     </div>
     <button onclick="copyToClipboard()">Copy array to Clipboard</button>    <button onclick="rotate()">Rotate</button>
+    <button onclick="addRow()">add a Row</button> 
+    <button onclick="addColumn()">add a Column</button> 
+
+    <button onclick="deleteRow()">delete a Row</button> 
+    <button onclick="deleteColumn()">delete a Column</button> 
 
     <br>
   </div></div>
   <p id="copyMessage">Array copiado al portapapeles</p>
   <div id="matrix"> </div>
 <!-- partial -->
-  <script>var matrix = [[1,1,1,1,0,1,1,1,1],[1,1,1,1,0,1,1,1,1],[1,1,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,1,1]]
+  <script>var matrix = 
+  [[0,1,0,1,0],
+  [1,1,1,1,1,],
+  [1,1,1,1,1,],
+  [0,1,1,1,0,],
+  [0,0,1,0,0,]]
+
+
+
+  function addColumn(){
+    
+    for(let i = 0 ; i <= matrix.length -1; i++){
+    
+    matrix[i].push(0)}
+    displayMatrix();
+
+   }
+
+
+
+   function deleteColumn(){
+    
+    if(matrix[0].length >= 2){
+    for(let i = 0 ; i <= matrix.length -1; i++){
+    matrix[i].pop()}
+    displayMatrix();
+
+   }}
+
+
+
+  function addRow(){
+
+
+    let nuevo= []
+    for (let i = 0; i <matrix[0].length; i++) {
+
+      nuevo.push(0)
+}
+
+    
+matrix.push(nuevo);
+
+    displayMatrix()
+console.log("column")}
+
+
+function deleteRow(){
+
+
+  if(matrix.length >= 2){
+
+
+
+matrix.pop();
+
+displayMatrix()}
+console.log("column")}
+
 
     // Nuevo código para generar una grilla predeterminada
     window.onload = function() {
