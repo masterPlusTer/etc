@@ -1,25 +1,11 @@
-<h1>64 x 64 RGB Led Matrix Generator<canvas id="canvas"></canvas></h1>
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - 64 x 64 RGB Led Matrix Generator / Arduino / Esp32 / Raspberry Pi / etc</title>
+  <style>
 
-<div class="etcetc">
-  <h5>Sube una imagen sencilla como un logo, un emoji o similar y editarlo a tu gusto.<br>
-    Edíta la cuadricula haciendo clic en los pixeles.<br>Puedes rotar la grilla, lo cual cambiará la configuración de filas y columnas de la matriz. <br>
-    Copia la matriz al portapapeles usando el botón.<br>
-  </h5>
-  <div class="etc">
-    <input type="file" id="imageInput" accept="image/*">
-    <div class="image-preview">
-      <img id="previewImage" src="" alt="Preview">
-    </div>
-    <span onclick="copyToClipboard()">🗎 Copy array to Clipboard</span>
-    <span onclick="rotate()">🗘 Rotate</span>
-    
-    <br>
-  </div>
-</div>
-
-<p id="copyMessage">Array copiado al portapapeles</p>
-<div id="matrix"></div>
-<style>body {margin: 2vmin; padding: 0; font-size: 100%; line-height: 1.5}
+body {margin: 2vmin; padding: 0; font-size: 100%; line-height: 1.5}
     h1, h2, h3, h4 {margin: 1em 0 .5em; line-height: 1.25}
     h1 {font-size: 2em}
     h2 {font-size: 1.5em}
@@ -37,6 +23,18 @@
     padding-left: 10vmin;
     }
 
+
+    #matrix{
+
+    }
+
+@media screen and (max-width: 600px) {
+  /* Estilos para pantallas más pequeñas */
+  td, th {
+    padding: 5px;
+  }
+}
+
     .matrix-cell {
         display: inline-block;
     width: 1.7vmin;
@@ -49,10 +47,10 @@
     }
 
     .matrix-row {
-      width: auto;
-      height: auto;
-      margin: 0;
-      line-height: 0;
+      width: max-content;
+    height: auto;
+    margin: 0;
+    line-height: 0;
     }
 
     #copyMessage {
@@ -91,9 +89,37 @@
     cursor: pointer;
    color:red;
    background-color:#abcdffcc
-  }</style>
+  }
 
-  <script> var matrix = 
+  </style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<h1>64 x 64 RGB Led Matrix Generator<canvas id="canvas"></canvas></h1>
+
+<div class="etcetc">
+  <h5>Sube una imagen sencilla como un logo, un emoji o similar y editarlo a tu gusto.<br>
+    Edíta la cuadricula haciendo clic en los pixeles.<br>Puedes rotar la grilla, lo cual cambiará la configuración de filas y columnas de la matriz. <br>
+    Copia la matriz al portapapeles usando el botón.<br>
+  </h5>
+  <div class="etc">
+    <input type="file" id="imageInput" accept="image/*">
+    <div class="image-preview">
+      <img id="previewImage" src="" alt="Preview">
+    </div>
+    <span onclick="copyToClipboard()">🗎 Copy array to Clipboard</span>
+    <span onclick="rotate()">🗘 Rotate</span>
+    
+    <br>
+  </div>
+</div>
+
+<p id="copyMessage">Array copiado al portapapeles</p>
+<div id="matrix"></div>
+<!-- partial -->
+  <script>
+ var matrix = 
    [[4,3,2,1,0,1,2,3,4,5,0,5,4,3,2,1,0,5,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,],
     [4,3,2,1,0,1,2,3,4,5,0,5,4,3,2,1,0,5,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,],
     [4,3,2,1,0,1,2,3,4,5,0,5,4,3,2,1,0,5,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,4,3,2,1,0,1,2,3,4,5,],
@@ -218,22 +244,21 @@
         var red = data[offset];
         var green = data[offset + 1];
         var blue = data[offset + 2];
-        var alpha = data[offset + 3];
 
-        var grayscale = (red + green + blue) / 3;
         var pixelValue;
-        if (grayscale > 192) {
+        if (red > 200 && green > 200 && blue > 200) {
           pixelValue = 5; // Blanco
-        } else if (grayscale > 128) {
+        } else if (red > 180 && green > 180 && blue > 0) {
           pixelValue = 4; // Amarillo
-        } else if (grayscale > 96) {
-          pixelValue = 3; // Azul
-        } else if (grayscale > 64) {
+        } else if (red > 0 && green > 180 && blue > 0) {
           pixelValue = 2; // Verde
+        } else if (red > 0 && green > 0 && blue > 180) {
+          pixelValue = 3; // Azul
+        } else if (red > 180 && green > 0 && blue > 0) {
+          pixelValue = 1; // Rojo
         } else {
-          pixelValue = 1; // Negro
+          pixelValue = 0; // Negro
         }
-
         row.push(pixelValue);
       }
       matrix.push(row);
@@ -335,3 +360,7 @@ function toggleColor(row, col) {
   }
   
       document.getElementById("imageInput").addEventListener("change", convertToMatrix);</script>
+
+</body>
+</html>
+
