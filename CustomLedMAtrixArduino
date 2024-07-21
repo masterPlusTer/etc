@@ -1,111 +1,180 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Generador de matriz LED</title>
+  <title>Cuadrícula Binaria</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin: auto;
+    }
+
+    td {
+      width: 25px;
+      height: 25px;
+      border: 1px solid black;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    td.selected {
+      background-color: red;
+      color: white;
+    }
+
+    tr.col-numbers td {
+      text-align: center;
+      font-size: 16px;
+      color: gray;
+      padding: 0 5px;
+    }
+  </style>
 </head>
 <body>
-<style>
-  table {
-    border-collapse: collapse;
-    margin: auto;
-  }
+  <h1>Generador de matrices</h1>
+  <label for="alto">Filas:</label>
+  <input type="number" id="alto" min="1" value="8">
+  <label for="ancho">Columnas:</label>
+  <input type="number" id="ancho" min="1" value="8">
+  <button onclick="crearGrilla()">Crear Grilla</button>
+  <button onclick="leerGrillaFilas()">Generar Array Filas</button>
+  <button onclick="leerGrillaColumnas()">Generar Array Columnas</button>
+  <button onclick="leerGrillaFilasInv()">Generar Array Filas Invertidas</button>
+  <button onclick="leerGrillaColumnasInv()">Generar Array Columnas Invertidas</button>
+  <br><br><br><br>
+  <div id="resultado"></div>
+  <table id="grilla">
+  </table>
+  <p></p>
 
-  td {
-    width: 25px;
-    height: 25px;
-    border: 1px solid black;
-    text-align: center;
-    font-size: 20px;
-  }
+  <script>
+   var grilla = document.getElementById("grilla");
+var cells = [];
 
-  td.selected {
-    background-color: red;
-    color: white;
-  }
+function crearGrilla() {
+var filas = parseInt(document.getElementById("alto").value);
+var columnas = parseInt(document.getElementById("ancho").value);
+resultado.innerHTML = ""
 
-  tr.col-numbers td {
-    text-align: center;
-    font-size: 16px;
-    color: gray;
-    padding: 0 5px;
-  }
-</style>
+var tabla = "";
+for (var i = 0; i < filas; i++) {
+tabla += "<tr>";
+for (var j = 0; j < columnas; j++) {
+tabla += "<td class='cell'>0</td>";
+}
+tabla += "</tr>";
+}
+grilla.innerHTML = tabla;
 
-<h1>Generador de matriz LED</h1>
-<label for="alto">Filas:</label>
-<input type="number" id="alto" min="1" value="8">
-<label for="ancho">Columnas:</label>
-<input type="number" id="ancho" min="1" value="8">
-<button onclick="crearGrilla()">Crear Grilla</button><button onclick="leerGrilla()">Generar Array</button><br><br>
-<div id="resultado"></div>
-<table id="grilla">
-</table>
-<p></p>
+cells = document.querySelectorAll(".cell");
 
+for (var i = 0; i < cells.length; i++) {
+cells[i].innerHTML = "0";
+}
 
-<script>
-  var grilla = document.getElementById("grilla");
-  var cells = [];
+for (var i = 0; i < cells.length; i++) {
+cells[i].addEventListener("click", function () {
+if (this.innerHTML === "0") {
+this.innerHTML = "1";
+this.classList.add("selected");
+} else {
+this.innerHTML = "0";
+this.classList.remove("selected");
+}
+});
+}
+}
 
-  function crearGrilla() {
-    var filas = parseInt(document.getElementById("alto").value);
-    var columnas = parseInt(document.getElementById("ancho").value);
-	resultado.innerHTML = ""
+function leerGrillaFilas() {
+var filaBinario = [];
+var filaHexadecimal = [];
+var filaArrays = [];
 
-    var tabla = "";
-    for (var i = 0; i < filas; i++) {
-      tabla += "<tr>";
-      for (var j = 0; j < columnas; j++) {
-        tabla += "<td class='cell'>0</td>";
-      }
-      tabla += "</tr>";
-    }
-    grilla.innerHTML = tabla;
+for (var i = 0; i < grilla.rows.length; i++) {
+var valorBinario = "";
+var valorArray = [];
+for (var j = 0; j < grilla.rows[i].cells.length; j++) {
+var valor = grilla.rows[i].cells[j].innerHTML;
+valorBinario += valor;
+valorArray.push(parseInt(valor));
+}
+var hexadecimal = parseInt(valorBinario, 2).toString(16);
+filaBinario.push("0b" + valorBinario);
+filaHexadecimal.push("0x" + hexadecimal);
+filaArrays.push(valorArray);
+}
 
-    cells = document.querySelectorAll(".cell");
+var resultado = document.getElementById("resultado");
+resultado.innerHTML = "<span style='color: red; font-weight: bold;'><br>Filas en binario:<br></span> " + filaBinario.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Filas en hexadecimal:<br></span> " + filaHexadecimal.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Filas en array:<br></span> " + filaArrays.join(", ") + "<br><br><br><br>";
+}
 
-    for (var i = 0; i < cells.length; i++) {
-      cells[i].innerHTML = "0";
-    }
+function leerGrillaColumnas() {
+var columnasBinario = [];
+var columnasHexadecimal = [];
+var columnasArrays = [];
 
-    for (var i = 0; i < cells.length; i++) {
-      cells[i].addEventListener("click", function () {
-        if (this.innerHTML === "0") {
-          this.innerHTML = "1";
-          this.classList.add("selected");
-        } else {
-          this.innerHTML = "0";
-          this.classList.remove("selected");
-        }
-      });
-    }
-  }
+for (var i = 0; i < grilla.rows[0].cells.length; i++) {
+var valorBinario = "";
+var valorArray = [];
+for (var j = 0; j < grilla.rows.length; j++) {
+var valor = grilla.rows[j].cells[i].innerHTML;
+valorBinario += valor;
+valorArray.push(parseInt(valor));
+}
+var hexadecimal = parseInt(valorBinario, 2).toString(16);
+columnasBinario.push("0b" + valorBinario);
+columnasHexadecimal.push("0x" + hexadecimal);
+columnasArrays.push(valorArray);
+}
 
-  function leerGrilla() {
-    var columnasBinario = [];
-    var columnasHexadecimal = [];
-    var columnasArrays = [];
+var resultado = document.getElementById("resultado");
+resultado.innerHTML = "<span style='color: red; font-weight: bold;'><br>Columnas en binario:<br></span> " + columnasBinario.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Columnas en hexadecimal:<br></span> " + columnasHexadecimal.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Columnas en array:<br></span> " + columnasArrays.join(", ") + "<br><br><br><br>";
+}
 
+function leerGrillaFilasInv() {
+var filaBinarioInv = [];
+var filaHexadecimalInv = [];
+var filaArraysInv = [];
 
-    for (var i = 0; i < grilla.rows[0].cells.length; i++) {
-      var valorBinario = "";
-      var valorArray = [];
-      for (var j = 0; j < grilla.rows.length; j++) {
-        var valor = grilla.rows[j].cells[i].innerHTML;
-        valorBinario += valor;
-        valorArray.push(parseInt(valor));
-      }
-      var hexadecimal = parseInt(valorBinario, 2).toString(16);
-      columnasBinario.push(valorBinario);
-      columnasHexadecimal.push("0x" + hexadecimal);
-      columnasArrays.push(valorArray);
-    }
+for (var i = 0; i < grilla.rows.length; i++) {
+var valorBinario = "";
+var valorArray = [];
+for (var j = grilla.rows[i].cells.length - 1; j >= 0; j--) {
+var valor = grilla.rows[i].cells[j].innerHTML;
+valorBinario += valor;
+valorArray.push(parseInt(valor));
+}
+var hexadecimal = parseInt(valorBinario, 2).toString(16);
+filaBinarioInv.push("0b" + valorBinario);
+filaHexadecimalInv.push("0x" + hexadecimal);
+filaArraysInv.push(valorArray);
+}
 
-    var resultado = document.getElementById("resultado");
-	resultado.innerHTML = "<span style='color: red; font-weight: bold;'><br>Columnas en binario:<br></span> " + JSON.stringify(columnasBinario).replaceAll(",",',<br>') + "<br><span style='color: red; font-weight: bold;'><br>Columnas en hexadecimal:<br></span> " + JSON.stringify(columnasHexadecimal).replaceAll(",",',<br>')  + "<br><span style='color: red; font-weight: bold;'><br>Columnas en array:<br></span> " + JSON.stringify(columnasArrays).replaceAll("],",'],<br>')+"<br><br><br><br>";  }
-</script>
+var resultado = document.getElementById("resultado");
+resultado.innerHTML = "<span style='color: red; font-weight: bold;'><br>Filas invertidas en binario:<br></span> " + filaBinarioInv.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Filas invertidas en hexadecimal:<br></span> " + filaHexadecimalInv.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Filas invertidas en array:<br></span> " + filaArraysInv.join(", ") + "<br><br><br><br>";
+}
 
+function leerGrillaColumnasInv() {
+var columnasBinarioInv = [];
+var columnasHexadecimalInv = [];
+var columnasArraysInv = [];
+
+for (var i = grilla.rows[0].cells.length - 1; i >= 0; i--) {
+var valorBinario = "";
+var valorArray = [];
+for (var j = 0; j < grilla.rows.length; j++) {
+var valor = grilla.rows[j].cells[i].innerHTML;
+valorBinario += valor;
+valorArray.push(parseInt(valor));
+}
+var hexadecimal = parseInt(valorBinario, 2).toString(16);
+columnasBinarioInv.push("0b" + valorBinario);
+columnasHexadecimalInv.push("0x" + hexadecimal);
+columnasArraysInv.push(valorArray);
+}
+
+var resultado = document.getElementById("resultado");
+resultado.innerHTML = "<span style='color: red; font-weight: bold;'><br>Columnas invertidas en binario:<br></span> " + columnasBinarioInv.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Columnas invertidas en hexadecimal:<br></span> " + columnasHexadecimalInv.join(", ") + "<br><span style='color: red; font-weight: bold;'><br>Columnas invertidas en array:<br></span> " + columnasArraysInv.join(", ") + "<br><br><br><br>";
+}
+  </script>
 </body>
 </html>
