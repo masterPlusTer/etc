@@ -24,23 +24,7 @@ numero_aleatorio =  random.randint(0, 2 ** 64 - 1)
 hexadecimal_aleatorio = hex(numero_aleatorio)[2:].zfill(16)
 
 
-binary_number = bin(int(hexadecimal_aleatorio, 16))[2:].zfill(64)
-print('valor binario')
-print()
-print(binary_number)
 
-
-print()
-
-print(binary_number[0:8])
-print(binary_number[8:16])
-print(binary_number[16:24])
-print(binary_number[24:32])
-print(binary_number[32:40])
-print(binary_number[40:48])
-print(binary_number[48:56])
-print(binary_number[56:64])
-print()
 
 def distribuir(a,b):
     return(str(hexadecimal_aleatorio[a:b]))
@@ -73,3 +57,4 @@ bin_array = hex_to_bin_array(hex_array)
 plot_bitmap(bin_array)
 
 print(bin_array)
+print(bin_array[1][0])
