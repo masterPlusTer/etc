@@ -1,4 +1,4 @@
-import qrcode
+mport qrcode
 import qrcode.constants
 from PIL import Image, ImageDraw, ImageTk
 from tkinter import Tk, Label, Entry, Button
@@ -87,7 +87,7 @@ def update_qr_code():
     # Obtener el texto del campo de entrada
     data = entry.get()
     if not data:
-        data = "Hola Mundo"  # Valor predeterminado si el campo está vacío
+        data = "master"  # Valor predeterminado si el campo está vacío
 
     generate_qr_code(data)
 
@@ -97,9 +97,6 @@ generate_qr_code("master")
 # Crear el botón para generar el código QR
 button = Button(root, text="Generar Código QR", command=update_qr_code)
 button.pack()
-
-# Iniciar el bucle principal de Tkinter
-root.mainloop()
 
 # Iniciar el bucle principal de Tkinter
 root.mainloop()
