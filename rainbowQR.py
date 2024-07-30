@@ -6,7 +6,7 @@ from itertools import cycle
 
 # Crear la ventana de Tkinter
 root = Tk()
-root.title("Código QR")
+root.title("Código QR Personalizado")
 
 # Crear el label donde se mostrará el código QR
 label = Label(root)
@@ -17,8 +17,8 @@ entry = Entry(root, width=50)
 entry.pack()
 
 def generate_color_palette():
-    # Genera una paleta de colores aleatorios
-    colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255)]
+    # Genera una paleta de colores aleatorios más oscuros
+    colors = [(128, 0, 0), (0, 128, 0), (0, 0, 128), (128, 128, 0), (128, 0, 128), (0, 128, 128)]
     return colors
 
 def flood_fill(matrix, x, y, color, colored_matrix):
@@ -55,7 +55,7 @@ def generate_qr_code():
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
+        box_size=15,
         border=4,
     )
 
