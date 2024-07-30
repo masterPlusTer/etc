@@ -45,12 +45,7 @@ def assign_colors(matrix):
 
     return colored_matrix
 
-def generate_qr_code():
-    # Obtener el texto del campo de entrada
-    data = entry.get()
-    if not data:
-        return
-
+def generate_qr_code(data):
     # Crear el objeto QRCode
     qr = qrcode.QRCode(
         version=1,
@@ -88,9 +83,23 @@ def generate_qr_code():
     label.configure(image=photo_image)
     label.image = photo_image
 
+def update_qr_code():
+    # Obtener el texto del campo de entrada
+    data = entry.get()
+    if not data:
+        data = "Hola Mundo"  # Valor predeterminado si el campo está vacío
+
+    generate_qr_code(data)
+
+# Generar el código QR predeterminado cuando se inicia la aplicación
+generate_qr_code("master")
+
 # Crear el botón para generar el código QR
-button = Button(root, text="Generar Código QR", command=generate_qr_code)
+button = Button(root, text="Generar Código QR", command=update_qr_code)
 button.pack()
+
+# Iniciar el bucle principal de Tkinter
+root.mainloop()
 
 # Iniciar el bucle principal de Tkinter
 root.mainloop()
